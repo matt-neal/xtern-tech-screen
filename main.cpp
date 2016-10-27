@@ -72,7 +72,7 @@ bool StartGuessing(int range, struct userID * newUser) {
 //main function that initializes non-struct features,
 //creates a new instance of the struct (and deletes it on request)
 //runs through 2 while loops to ensure non-overwriting functionality.
-//Includes minor error catching for mismatched input values.
+//Includes minor error catching for mismatched input values to expected type or range.
 //Returns current number of coins a user has, which resets upon struct delete.
 int main(){
     srand(time(NULL));
@@ -84,6 +84,7 @@ int main(){
     while (keepgoing) {
         std::cout << "Welcome to XternCoin!" << std::endl;
         std::cout << "Please enter a user id" << std::endl;
+        keepGOING = true;
         std::cin >> userId;
 
         userID *newUser = new userID;
@@ -98,11 +99,18 @@ int main(){
                     std::cout << "Please select a range for the random number and search." << std::endl;
                     std::cout << "(I advise less than 100000.)" << std::endl;
                     std::cin >> range;
-                    StartGuessing(range, newUser);
-                    GetCoins(newUser);
+                    if(std::cin.fail() && range > 9999999){
+                        std::cout << "I'm sorry, that is an invalid selection." << std::endl;
+                        std::cin.clear();
+                    }
+                    else {
+                        StartGuessing(range, newUser);
+                        GetCoins(newUser);
+                    }
                 }
             else if (choose == 2) {
                 delete newUser;
+                keepGOING = false;
             } else if (choose == 3) {
                 keepgoing = false;
                 keepGOING = false;
