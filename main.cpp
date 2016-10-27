@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//struct to handle all user-based information
+//handles a users id and coins so that they are not global
 struct userID {
     void setCoins(int coin) {
         coins = coin;
@@ -22,13 +24,18 @@ public:
     string userId;
 };
 
-//number generator with a range
+//number generator with a passed in user-defined range
 int NewNumber(int range) {
     int random = rand() %range;
     return random;
 }
 
 //guess validation (returns true/false)
+//takes in struct and range, spins up a while loop
+//so that it can search until complete.
+//Randomly generates 2 numbers, one to find, one as a guess
+//Regenerates guesses until it matches the find.
+//Increments coin count when match is found.
 bool HandleGuess(struct userID * newUser, int range) {
     bool keepGoing = true;
     int guesses = 1;
@@ -50,7 +57,7 @@ bool HandleGuess(struct userID * newUser, int range) {
     return true;
 }
 
-//returns the users current amount of coins
+//returns the user structs current amount of coins
 int GetCoins(struct userID * newUser){
     int coinInfo = newUser->getCoins();
     cout << coinInfo << endl;
@@ -63,6 +70,12 @@ bool StartGuessing(int range, struct userID * newUser) {
     return true;
 }
 
+
+//main function that initializes non-struct features,
+//creates a new instance of the struct (and deletes it on request)
+//runs through 2 while loops to ensure non-overwriting functionality.
+//Includes minor error catching for mismatched input values.
+//Returns current number of coins a user has, which resets upon struct delete.
 int main(){
     srand(time(NULL));
     bool keepgoing = true;
