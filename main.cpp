@@ -2,8 +2,6 @@
 #include <time.h>
 #include <cstdlib>
 
-using namespace std;
-
 //struct to handle all user-based information
 //handles a users id and coins so that they are not global
 struct userID {
@@ -15,13 +13,13 @@ struct userID {
         return coins;
     }
 
-    void setUserId(string user) {
+    void setUserId(std::string user) {
         userId = user;
     }
 
 public:
     int coins = 0;
-    string userId;
+    std::string userId;
 };
 
 //number generator with a passed in user-defined range
@@ -46,7 +44,7 @@ bool HandleGuess(struct userID * newUser, int range) {
         if (numberToFind == numberToGuess) {
             currentCoins++;
             newUser->setCoins(currentCoins);
-            cout << "This attempt took " << guesses << " trys to complete." << endl;
+            std::cout << "This attempt took " << guesses << " trys to complete." << std::endl;
             keepGoing = false;
         }
         else {
@@ -60,7 +58,7 @@ bool HandleGuess(struct userID * newUser, int range) {
 //returns the user structs current amount of coins
 int GetCoins(struct userID * newUser){
     int coinInfo = newUser->getCoins();
-    cout << coinInfo << endl;
+    std::cout << coinInfo << std::endl;
     return coinInfo;
 }
 
@@ -82,24 +80,24 @@ int main(){
     bool keepGOING = true;
     int choose = 0;
     int range = 0;
-    string userId = "";
+    std::string userId = "";
     while (keepgoing) {
-        cout << "Welcome to XternCoin!" << endl;
-        cout << "Please enter a user id" << endl;
-        cin >> userId;
+        std::cout << "Welcome to XternCoin!" << std::endl;
+        std::cout << "Please enter a user id" << std::endl;
+        std::cin >> userId;
 
         userID *newUser = new userID;
         newUser->setUserId(userId);
         while (keepGOING) {
-            cout << "Please select from the following options:" << endl;
-            cout << "1 to start a new random guess." << endl;
-            cout << "2 to clear your user information." << endl;
-            cout << "3 to end your session. This will terminate the program." << endl;
-            cin >> choose;
+            std::cout << "Please select from the following options:" << std::endl;
+            std::cout << "1 to start a new random guess." << std::endl;
+            std::cout << "2 to clear your user information." << std::endl;
+            std::cout << "3 to end your session. This will terminate the program." << std::endl;
+            std::cin >> choose;
             if (choose == 1) {
-                    cout << "Please select a range for the random number and search." << endl;
-                    cout << "(I advise less than 100000.)" << endl;
-                    cin >> range;
+                    std::cout << "Please select a range for the random number and search." << std::endl;
+                    std::cout << "(I advise less than 100000.)" << std::endl;
+                    std::cin >> range;
                     StartGuessing(range, newUser);
                     GetCoins(newUser);
                 }
@@ -109,7 +107,7 @@ int main(){
                 keepgoing = false;
                 keepGOING = false;
             } else {
-                cout << "I'm sorry, that is an invalid selection." << endl;
+                std::cout << "I'm sorry, that is an invalid selection." << std::endl;
             }
         }
     }
